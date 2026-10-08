@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="FundiConnect Kenya connects customers with trusted local professionals for home repairs, construction, maintenance, and everyday services."
+    />
+    <title>FundiConnect Kenya | Trusted Local Fundis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container" aria-label="Main navigation">
+        <a href="#home" class="brand" aria-label="FundiConnect Home">
+          <span class="brand-mark">F</span>
+          <span class="brand-text">FundiConnect</span>
+        </a>
+
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-panel">
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#find-fundi">Find a Fundi</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#account-section">Login</a></li>
+          </ul>
+          <a href="#account-section" class="btn btn-primary">Join as a Fundi</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+          <div class="hero-copy">
+            <span class="eyebrow">Trusted in Kenya</span>
+            <h1>Find Trusted Fundis Near You.</h1>
+            <p>
+              Connect with skilled professionals across Kenya for reliable home repairs,
+              construction, maintenance, and everyday services.
+            </p>
+
+            <form class="hero-search" id="hero-search-form">
+              <div class="field field-service">
+                <label for="service-search" class="sr-only">Service</label>
+                <input id="service-search" type="text" placeholder="Service" />
+              </div>
+              <div class="field field-location">
+                <label for="location-search" class="sr-only">Location</label>
+                <input id="location-search" type="text" placeholder="Town or neighbourhood" />
+              </div>
+              <button class="btn btn-primary" type="submit">Find a Fundi</button>
+            </form>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary">Find a Fundi</button>
+              <button class="btn btn-secondary">Join as a Professional</button>
+            </div>
+
+            <ul class="trust-indicators" aria-label="Trust indicators">
+              <li>Verified profiles</li>
+              <li>Customer reviews</li>
+              <li>Local professionals</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="services section" id="categories">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="eyebrow accent">Popular services</span>
+            <h2>Top Categories for Everyday Needs</h2>
+          </div>
+          <div class="cards-grid services-grid" id="services-grid"></div>
+        </div>
+      </section>
+
+      <section class="directory section alt-bg" id="find-fundi">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow accent">Find a Fundi</span>
+              <h2>Browse Skilled Professionals</h2>
+            </div>
+          </div>
+
+          <div class="directory-toolbar card">
+            <div class="filter-group search-wrap">
+              <label for="directory-search" class="sr-only">Search workers</label>
+              <input id="directory-search" type="search" placeholder="Search by name, service, or location" />
+            </div>
+
+            <div class="filter-row">
+              <select id="filter-category">
+                <option value="">All services</option>
+              </select>
+              <select id="filter-location">
+                <option value="">All locations</option>
+              </select>
+              <select id="filter-price">
+                <option value="">Any budget</option>
+                <option value="under-3000">Under KSh 3,000</option>
+                <option value="3000-6000">KSh 3,000 - 6,000</option>
+                <option value="6000-plus">KSh 6,000+</option>
+              </select>
+              <select id="filter-availability">
+                <option value="">Any availability</option>
+                <option value="available">Available now</option>
+                <option value="busy">Busy</option>
+              </select>
+              <select id="filter-experience">
+                <option value="">Experience</option>
+                <option value="3+">3+ years</option>
+                <option value="5+">5+ years</option>
+                <option value="8+">8+ years</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="directory-grid" id="professionals-grid"></div>
+        </div>
+      </section>
+
+      <section class="how-it-works section" id="how-it-works">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="eyebrow accent">How it works</span>
+            <h2>Three simple steps to get the right help</h2>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step-card card">
+              <div class="step-icon">01</div>
+              <h3>Search</h3>
+              <p>Find a professional based on your service needs and location.</p>
+            </article>
+            <article class="step-card card">
+              <div class="step-icon">02</div>
+              <h3>Compare</h3>
+              <p>Review available profiles, skills, and genuine customer feedback.</p>
+            </article>
+            <article class="step-card card">
+              <div class="step-icon">03</div>
+              <h3>Connect</h3>
+              <p>Send a booking request and agree on job details.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="about section alt-bg" id="about">
+        <div class="container about-grid">
+          <div class="about-image"></div>
+          <div class="about-copy">
+            <span class="eyebrow accent">About FundiConnect</span>
+            <h2>Built for Kenya’s growing local service economy</h2>
+            <p>
+              FundiConnect helps homeowners, landlords, businesses, and families discover
+              reliable local professionals across Kenya. Our mission is simple: help skilled
+              Kenyans grow their businesses while making trusted services easier to access.
+            </p>
+            <p>
+              From quick repairs to home upgrades, we connect people with the right professionals
+              for the job and support a more transparent, confident local marketplace.
+            </p>
+            <ul class="check-list">
+              <li>Verified professional profiles</li>
+              <li>Transparent service listings</li>
+              <li>Easy local discovery and booking</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="business-model section">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="eyebrow accent">Business model</span>
+            <h2>Built for sustainable growth</h2>
+          </div>
+          <div class="business-cards">
+            <article class="card info-card">
+              <h3>Premium listings</h3>
+              <p>Professionals can upgrade their visibility with paid premium placement and featured spots.</p>
+            </article>
+            <article class="card info-card">
+              <h3>Monthly subscriptions</h3>
+              <p>Business tools and additional features can be offered via subscription plans for active users.</p>
+            </article>
+            <article class="card info-card marked">
+              <span class="sponsored-tag">Sponsored</span>
+              <h3>Featured listings</h3>
+              <p>Prominent sponsored listings are clearly marked to keep trust and transparency high.</p>
+            </article>
+            <article class="card info-card">
+              <h3>Future commissions</h3>
+              <p>As the marketplace grows, platform fees can be applied on successfully completed bookings.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="account-section section alt-bg" id="account-section">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="eyebrow accent">Accounts</span>
+            <h2>Customer and professional access</h2>
+          </div>
+
+          <div class="account-grid">
+            <div class="card auth-card">
+              <h3>Login</h3>
+              <form id="login-form" class="auth-form">
+                <input type="email" name="email" placeholder="Email" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <button type="submit" class="btn btn-primary">Login</button>
+              </form>
+            </div>
+
+            <div class="card auth-card">
+              <h3>Register</h3>
+              <form id="register-form" class="auth-form">
+                <input type="text" name="name" placeholder="Full name" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <select name="role">
+                  <option value="customer">Customer</option>
+                  <option value="professional">Professional</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Create account</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="admin-dashboard section" id="admin-dashboard">
+        <div class="container">
+          <div class="section-heading center">
+            <span class="eyebrow accent">Admin</span>
+            <h2>Protected dashboard</h2>
+          </div>
+          <div class="card dashboard-card">
+            <p class="muted">Admin access is enforced on the backend. Use the default admin account below for demo access.</p>
+            <div class="demo-credentials">
+              <strong>Email:</strong> admin@fundiconnect.co.ke
+              <strong>Password:</strong> admin123
+            </div>
+            <button class="btn btn-primary" id="load-admin-dashboard">Load dashboard</button>
+            <div id="admin-dashboard-content" class="admin-content"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>About FundiConnect</h3>
+          <p>Helping customers in Kenya find trusted local professionals with confidence.</p>
+        </div>
+        <div>
+          <h4>Browse Services</h4>
+          <ul>
+            <li><a href="#categories">Carpentry</a></li>
+            <li><a href="#categories">Plumbing</a></li>
+            <li><a href="#categories">Electrical</a></li>
+            <li><a href="#categories">Painting</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Join as a Fundi</h4>
+          <ul>
+            <li><a href="#account-section">Register</a></li>
+            <li><a href="#account-section">Login</a></li>
+            <li><a href="#how-it-works">How it works</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Help & Support</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+            <li><a href="#">Contact Info</a></li>
+            <li><a href="#">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <p>© 2026 FundiConnect Kenya</p>
+      </div>
+    </footer>
+
+    <div class="modal" id="booking-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close="true"></div>
+      <div class="modal-content card">
+        <button class="modal-close" aria-label="Close booking modal">×</button>
+        <h3>Book a service request</h3>
+        <form id="booking-form" class="booking-form">
+          <div class="input-row">
+            <input type="text" name="customerName" placeholder="Your name" required />
+            <input type="tel" name="phone" placeholder="Phone number" />
+          </div>
+          <div class="input-row">
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="text" name="service" placeholder="Requested service" required />
+          </div>
+          <input type="text" name="location" placeholder="Location" required />
+          <textarea name="description" rows="4" placeholder="Describe the problem" required></textarea>
+          <div class="input-row">
+            <input type="date" name="preferredDate" />
+            <input type="time" name="preferredTime" />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit request</button>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
