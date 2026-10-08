@@ -1,324 +1,318 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="FundiConnect Kenya connects customers with trusted local professionals for home repairs, construction, maintenance, and everyday services."
-    />
-    <title>FundiConnect Kenya | Trusted Local Fundis</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./css/styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <nav class="navbar container" aria-label="Main navigation">
-        <a href="#home" class="brand" aria-label="FundiConnect Home">
-          <span class="brand-mark">F</span>
-          <span class="brand-text">FundiConnect</span>
-        </a>
+document.addEventListener('DOMContentLoaded', () => {
+  initializeApp();
+});
 
-        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+const appState = {
+  categories: [],
+  professionals: [],
+  filteredProfessionals: []
+};
 
-        <div class="nav-panel">
-          <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#find-fundi">Find a Fundi</a></li>
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#account-section">Login</a></li>
-          </ul>
-          <a href="#account-section" class="btn btn-primary">Join as a Fundi</a>
-        </div>
-      </nav>
-    </header>
+async function initializeApp() {
+  await loadCategories();
+  await loadProfessionals();
+  setupEventListeners();
+  setupFilters();
+  setupForms();
 
-    <main id="home">
-      <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-          <div class="hero-copy">
-            <span class="eyebrow">Trusted in Kenya</span>
-            <h1>Find Trusted Fundis Near You.</h1>
-            <p>
-              Connect with skilled professionals across Kenya for reliable home repairs,
-              construction, maintenance, and everyday services.
-            </p>
+  const heroSearchForm = document.getElementById('hero-search-form');
+  if (heroSearchForm) {
+    heroSearchForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const service = document.getElementById('service-search').value.trim();
+      const location = document.getElementById('location-search').value.trim();
+      document.getElementById('find-fundi').scrollIntoView({ behavior: 'smooth' });
 
-            <form class="hero-search" id="hero-search-form">
-              <div class="field field-service">
-                <label for="service-search" class="sr-only">Service</label>
-                <input id="service-search" type="text" placeholder="Service" />
-              </div>
-              <div class="field field-location">
-                <label for="location-search" class="sr-only">Location</label>
-                <input id="location-search" type="text" placeholder="Town or neighbourhood" />
-              </div>
-              <button class="btn btn-primary" type="submit">Find a Fundi</button>
-            </form>
+      const searchField = document.getElementById('directory-search');
+      if (searchField) searchField.value = service || location || '';
 
-            <div class="hero-actions">
-              <button class="btn btn-primary" onclick="document.querySelector('#find-fundi').scrollIntoView({behavior:'smooth'})">Find a Fundi</button>
-              <button class="btn btn-secondary" onclick="document.querySelector('#account-section').scrollIntoView({behavior:'smooth'})">Join as a Professional</button>
-            </div>
+      const categoryFilter = document.getElementById('filter-category');
+      if (categoryFilter && service) {
+        categoryFilter.value = service;
+      }
 
-            <ul class="trust-indicators" aria-label="Trust indicators">
-              <li>Verified profiles</li>
-              <li>Customer reviews</li>
-              <li>Local professionals</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+      const locationFilter = document.getElementById('filter-location');
+      if (locationFilter && location) {
+        locationFilter.value = location;
+      }
 
-      <section class="services section" id="categories">
-        <div class="container">
-          <div class="section-heading center">
-            <span class="eyebrow accent">Popular services</span>
-            <h2>Top Categories for Everyday Needs</h2>
-          </div>
-          <div class="cards-grid services-grid" id="services-grid"></div>
-        </div>
-      </section>
+      applyFilters();
+    });
+  }
+}
 
-      <section class="directory section alt-bg" id="find-fundi">
-        <div class="container">
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow accent">Find a Fundi</span>
-              <h2>Browse Skilled Professionals</h2>
-            </div>
-          </div>
+async function loadCategories() {
+  try {
+    const categories = await supabase.getCategories();
+    appState.categories = categories;
+    renderCategories(categories);
+    populateCategoryFilter(categories);
+  } catch (error) {
+    console.error('Failed to load categories:', error);
+    const fallback = [
+      { id: 1, name: 'Carpentry', description: 'Custom joinery, cabinetry, framing, and finishes.', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80' },
+      { id: 2, name: 'Plumbing', description: 'Pipe repairs, installations, and leak fixes.', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80' },
+      { id: 3, name: 'Electrical Services', description: 'Wiring, repair, maintenance, and safety checks.', image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=900&q=80' },
+      { id: 4, name: 'Painting', description: 'Interior and exterior painting with neat finishes.', image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=900&q=80' },
+      { id: 5, name: 'Welding', description: 'Steelwork, fabrication, and structural repairs.', image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80' },
+      { id: 6, name: 'Cleaning', description: 'Home, office, and deep cleaning services.', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80' },
+      { id: 7, name: 'Mechanics', description: 'Vehicle maintenance, diagnostics, and body repairs.', image: 'https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80' },
+      { id: 8, name: 'Computer and Phone Repair', description: 'Device diagnostics, repairs, and upgrades.', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80' }
+    ];
+    appState.categories = fallback;
+    renderCategories(fallback);
+    populateCategoryFilter(fallback);
+  }
+}
 
-          <div class="directory-toolbar card">
-            <div class="filter-group search-wrap">
-              <label for="directory-search" class="sr-only">Search workers</label>
-              <input id="directory-search" type="search" placeholder="Search by name, service, or location" />
-            </div>
+async function loadProfessionals() {
+  try {
+    const professionals = await supabase.getProfessionals();
+    appState.professionals = professionals;
+    appState.filteredProfessionals = professionals;
+    renderProfessionals(professionals);
+  } catch (error) {
+    console.error('Failed to load professionals:', error);
+    const fallback = [
+      { id: 1, name: 'Amina Wanjiku', trade: 'Carpenter', location: 'Nairobi West', bio: 'Custom furniture maker with 8+ years experience.', profile_image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,800 - 5,000', rating: 4.9, reviews_count: 42, experience: 8, verified: true, available: true, skills: ['Cabinet installation', 'Custom shelving', 'Wardrobes'] },
+      { id: 2, name: 'Daniel Otieno', trade: 'Electrician', location: 'Kisumu', bio: 'Licensed electrician with safe and efficient work.', profile_image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 2,000 - 6,500', rating: 4.8, reviews_count: 31, experience: 6, verified: true, available: true, skills: ['Wiring', 'Lighting design', 'Fault finding'] },
+      { id: 3, name: 'Jane Njeri', trade: 'Plumber', location: 'Nakuru', bio: 'Reliable plumbing expert with leak detection expertise.', profile_image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,500 - 4,800', rating: 4.7, reviews_count: 25, experience: 5, verified: true, available: true, skills: ['Pipe fitting', 'Bathroom installations', 'Leak repair'] },
+      { id: 4, name: 'Joseph Kariuki', trade: 'Painter', location: 'Thika', bio: 'Interior and exterior painter with smooth finishes.', profile_image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,200 - 5,200', rating: 4.6, reviews_count: 22, experience: 7, verified: false, available: true, skills: ['Wall priming', 'Decorative finishes', 'Exterior painting'] },
+      { id: 5, name: 'Peter Kamau', trade: 'Welder', location: 'Mombasa', bio: 'Fabrication and repair specialist for metal structures.', profile_image: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 2,500 - 7,500', rating: 4.9, reviews_count: 18, experience: 9, verified: true, available: false, skills: ['Metal fabrication', 'Gate repairs', 'Steel welding'] },
+      { id: 6, name: 'Grace Mburu', trade: 'Cleaner', location: 'Westlands', bio: 'Home and office cleaning professional.', profile_image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,000 - 3,200', rating: 4.8, reviews_count: 29, experience: 4, verified: true, available: true, skills: ['Deep cleaning', 'Move-in cleaning', 'Office tidying'] },
+      { id: 7, name: 'Kevin Omondi', trade: 'Mechanic', location: 'Nairobi CBD', bio: 'Vehicle diagnostics and maintenance specialist.', profile_image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 2,200 - 6,800', rating: 4.7, reviews_count: 36, experience: 10, verified: true, available: true, skills: ['Engine tuning', 'Brake service', 'Diagnostics'] },
+      { id: 8, name: 'Salim Ali', trade: 'Phone & Computer Repair', location: 'Eldoret', bio: 'Tech repair specialist for devices and troubleshooting.', profile_image: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,800 - 5,000', rating: 4.9, reviews_count: 40, experience: 6, verified: true, available: true, skills: ['Smartphone repair', 'Laptop diagnostics', 'Software setup'] }
+    ];
 
-            <div class="filter-row">
-              <select id="filter-category">
-                <option value="">All services</option>
-              </select>
-              <select id="filter-location">
-                <option value="">All locations</option>
-              </select>
-              <select id="filter-price">
-                <option value="">Any budget</option>
-                <option value="under-3000">Under KSh 3,000</option>
-                <option value="3000-6000">KSh 3,000 - 6,000</option>
-                <option value="6000-plus">KSh 6,000+</option>
-              </select>
-              <select id="filter-availability">
-                <option value="">Any availability</option>
-                <option value="available">Available now</option>
-                <option value="busy">Busy</option>
-              </select>
-              <select id="filter-experience">
-                <option value="">Experience</option>
-                <option value="3+">3+ years</option>
-                <option value="5+">5+ years</option>
-                <option value="8+">8+ years</option>
-              </select>
-            </div>
-          </div>
+    appState.professionals = fallback;
+    appState.filteredProfessionals = fallback;
+    renderProfessionals(fallback);
+  }
+}
 
-          <div class="directory-grid" id="professionals-grid"></div>
-        </div>
-      </section>
-
-      <section class="how-it-works section" id="how-it-works">
-        <div class="container">
-          <div class="section-heading center">
-            <span class="eyebrow accent">How it works</span>
-            <h2>Three simple steps to get the right help</h2>
-          </div>
-
-          <div class="steps-grid">
-            <article class="step-card card">
-              <div class="step-icon">01</div>
-              <h3>Search</h3>
-              <p>Find a professional based on your service needs and location.</p>
-            </article>
-            <article class="step-card card">
-              <div class="step-icon">02</div>
-              <h3>Compare</h3>
-              <p>Review available profiles, skills, and genuine customer feedback.</p>
-            </article>
-            <article class="step-card card">
-              <div class="step-icon">03</div>
-              <h3>Connect</h3>
-              <p>Send a booking request and agree on job details.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="about section alt-bg" id="about">
-        <div class="container about-grid">
-          <div class="about-image"></div>
-          <div class="about-copy">
-            <span class="eyebrow accent">About FundiConnect</span>
-            <h2>Built for Kenya's growing local service economy</h2>
-            <p>
-              FundiConnect helps homeowners, landlords, businesses, and families discover
-              reliable local professionals across Kenya. Our mission is simple: help skilled
-              Kenyans grow their businesses while making trusted services easier to access.
-            </p>
-            <p>
-              From quick repairs to home upgrades, we connect people with the right professionals
-              for the job and support a more transparent, confident local marketplace.
-            </p>
-            <ul class="check-list">
-              <li>Verified professional profiles</li>
-              <li>Transparent service listings</li>
-              <li>Easy local discovery and booking</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="business-model section">
-        <div class="container">
-          <div class="section-heading center">
-            <span class="eyebrow accent">Business model</span>
-            <h2>Built for sustainable growth</h2>
-          </div>
-          <div class="business-cards">
-            <article class="card info-card">
-              <h3>Premium listings</h3>
-              <p>Professionals can upgrade their visibility with paid premium placement and featured spots.</p>
-            </article>
-            <article class="card info-card">
-              <h3>Monthly subscriptions</h3>
-              <p>Business tools and additional features can be offered via subscription plans for active users.</p>
-            </article>
-            <article class="card info-card marked">
-              <span class="sponsored-tag">Sponsored</span>
-              <h3>Featured listings</h3>
-              <p>Prominent sponsored listings are clearly marked to keep trust and transparency high.</p>
-            </article>
-            <article class="card info-card">
-              <h3>Future commissions</h3>
-              <p>As the marketplace grows, platform fees can be applied on successfully completed bookings.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="account-section section alt-bg" id="account-section">
-        <div class="container">
-          <div class="section-heading center">
-            <span class="eyebrow accent">Accounts</span>
-            <h2>Customer and professional access</h2>
-          </div>
-
-          <div class="account-grid">
-            <div class="card auth-card">
-              <h3>Login</h3>
-              <form id="login-form" class="auth-form">
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="password" name="password" placeholder="Password" required />
-                <button type="submit" class="btn btn-primary">Login</button>
-              </form>
-            </div>
-
-            <div class="card auth-card">
-              <h3>Register</h3>
-              <form id="register-form" class="auth-form">
-                <input type="text" name="name" placeholder="Full name" required />
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="password" name="password" placeholder="Password" required />
-                <select name="role" required>
-                  <option value="">Select role</option>
-                  <option value="customer">Customer</option>
-                  <option value="professional">Professional</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Create account</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <div>
-          <h3>About FundiConnect</h3>
-          <p>Helping customers in Kenya find trusted local professionals with confidence.</p>
-        </div>
-        <div>
-          <h4>Browse Services</h4>
-          <ul>
-            <li><a href="#categories">Carpentry</a></li>
-            <li><a href="#categories">Plumbing</a></li>
-            <li><a href="#categories">Electrical</a></li>
-            <li><a href="#categories">Painting</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Join as a Fundi</h4>
-          <ul>
-            <li><a href="#account-section">Register</a></li>
-            <li><a href="#account-section">Login</a></li>
-            <li><a href="#how-it-works">How it works</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Help & Support</h4>
-          <ul>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms & Conditions</a></li>
-            <li><a href="#">Contact Info</a></li>
-            <li><a href="#">WhatsApp</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="container footer-bottom">
-        <p>© 2026 FundiConnect Kenya</p>
-      </div>
-    </footer>
-
-    <div class="modal" id="booking-modal" aria-hidden="true">
-      <div class="modal-backdrop" data-close="true"></div>
-      <div class="modal-content card">
-        <button class="modal-close" aria-label="Close booking modal">×</button>
-        <h3>Book a service request</h3>
-        <form id="booking-form" class="booking-form">
-          <div class="input-row">
-            <input type="text" name="customerName" placeholder="Your name" required />
-            <input type="tel" name="phone" placeholder="Phone number" />
-          </div>
-          <div class="input-row">
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="text" name="service" placeholder="Requested service" required />
-          </div>
-          <input type="text" name="location" placeholder="Location" required />
-          <textarea name="description" rows="4" placeholder="Describe the problem" required></textarea>
-          <div class="input-row">
-            <input type="date" name="preferredDate" />
-            <input type="time" name="preferredTime" />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit request</button>
-          <p class="form-status" aria-live="polite"></p>
-        </form>
+function renderCategories(categories) {
+  const grid = document.getElementById('services-grid');
+  if (!grid) return;
+  grid.innerHTML = categories.map(cat => `
+    <div class="service-card">
+      <div class="service-media" style="background-image: url('${cat.image}')"></div>
+      <div class="service-caption">
+        <h3>${cat.name}</h3>
+        <p>${cat.description || ''}</p>
+        <a href="#find-fundi" class="explore-link">Explore Fundis</a>
       </div>
     </div>
+  `).join('');
+}
 
-    <script src="./js/config.js"></script>
-    <script src="./js/supabase-client.js"></script>
-    <script src="./js/app.js"></script>
-  </body>
-</html>
+function renderProfessionals(professionals) {
+  const grid = document.getElementById('professionals-grid');
+  if (!grid) return;
+
+  if (!professionals.length) {
+    grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#58657d;">No professionals match this filter.</p>';
+    return;
+  }
+
+  grid.innerHTML = professionals.map(prof => `
+    <div class="professional-card">
+      <div class="professional-cover" style="background-image: url('${prof.cover_image || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80'}')"></div>
+      <div class="professional-body">
+        <div class="professional-head">
+          <img src="${prof.profile_image || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80'}" alt="${prof.name}" class="professional-avatar" />
+          <div>
+            <h3>${prof.name}</h3>
+            <p>${prof.trade}</p>
+          </div>
+        </div>
+        <div class="professional-meta">
+          <span>📍 ${prof.location}</span>
+          <span class="badge ${prof.verified ? 'verified' : 'unverified'}">${prof.verified ? 'Verified' : 'Pending'}</span>
+        </div>
+        <div class="professional-meta">
+          <span>⭐ ${prof.rating || 4.5}</span>
+          <span>⏱ ${prof.experience || 0} yrs</span>
+        </div>
+        <p>${prof.bio || ''}</p>
+        <div class="skill-list">
+          ${(prof.skills || []).slice(0, 3).map(skill => `<span>${skill}</span>`).join('')}
+        </div>
+        <p><strong>${prof.price_range || 'Quote on request'}</strong></p>
+        <div class="professional-actions">
+          <button class="btn btn-primary" onclick="openBookingModal('${prof.name}', '${prof.trade}')">Book Now</button>
+          <button class="btn btn-ghost">Save</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function populateCategoryFilter(categories) {
+  const select = document.getElementById('filter-category');
+  if (!select) return;
+  select.innerHTML = '<option value="">All services</option>' + categories.map(cat => `<option value="${cat.name}">${cat.name}</option>`).join('');
+
+  const locationSelect = document.getElementById('filter-location');
+  if (locationSelect) {
+    const locations = [...new Set(appState.professionals.map(p => p.location).filter(Boolean))];
+    locationSelect.innerHTML = '<option value="">All locations</option>' + locations.map(loc => `<option value="${loc}">${loc}</option>`).join('');
+  }
+}
+
+function setupEventListeners() {
+  const toggle = document.querySelector('.nav-toggle');
+  const navPanel = document.querySelector('.nav-panel');
+  if (toggle && navPanel) {
+    toggle.addEventListener('click', () => {
+      const isOpen = navPanel.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  document.querySelector('.modal-close')?.addEventListener('click', () => {
+    document.getElementById('booking-modal')?.classList.remove('is-open');
+  });
+
+  document.querySelector('.modal-backdrop')?.addEventListener('click', () => {
+    document.getElementById('booking-modal')?.classList.remove('is-open');
+  });
+}
+
+function setupFilters() {
+  const search = document.getElementById('directory-search');
+  const category = document.getElementById('filter-category');
+  const location = document.getElementById('filter-location');
+  const price = document.getElementById('filter-price');
+  const experience = document.getElementById('filter-experience');
+
+  [search, category, location, price, experience].forEach(el => {
+    if (el) el.addEventListener('input', applyFilters);
+    if (el) el.addEventListener('change', applyFilters);
+  });
+}
+
+function applyFilters() {
+  const search = document.getElementById('directory-search')?.value.toLowerCase() || '';
+  const category = document.getElementById('filter-category')?.value || '';
+  const location = document.getElementById('filter-location')?.value || '';
+  const price = document.getElementById('filter-price')?.value || '';
+  const experience = document.getElementById('filter-experience')?.value || '';
+
+  let result = [...appState.professionals];
+
+  if (search) {
+    result = result.filter(prof =>
+      prof.name.toLowerCase().includes(search) ||
+      prof.trade.toLowerCase().includes(search) ||
+      prof.location.toLowerCase().includes(search)
+    );
+  }
+
+  if (category) {
+    result = result.filter(prof => prof.trade === category);
+  }
+
+  if (location) {
+    result = result.filter(prof => prof.location === location);
+  }
+
+  if (price) {
+    if (price === 'under-3000') {
+      result = result.filter(prof => {
+        const amount = (prof.price_range || '').match(/\d[\d,]*/g)?.[0]?.replace(/,/g, '');
+        return amount ? Number(amount) < 3000 : true;
+      });
+    }
+    if (price === '3000-6000') {
+      result = result.filter(prof => {
+        const amount = (prof.price_range || '').match(/\d[\d,]*/g)?.[0]?.replace(/,/g, '');
+        return amount ? Number(amount) >= 3000 && Number(amount) <= 6000 : true;
+      });
+    }
+    if (price === '6000-plus') {
+      result = result.filter(prof => {
+        const amount = (prof.price_range || '').match(/\d[\d,]*/g)?.[0]?.replace(/,/g, '');
+        return amount ? Number(amount) > 6000 : true;
+      });
+    }
+  }
+
+  if (experience) {
+    const minExp = Number(experience.replace('+', ''));
+    result = result.filter(prof => Number(prof.experience || 0) >= minExp);
+  }
+
+  renderProfessionals(result);
+}
+
+function setupForms() {
+  const bookingForm = document.getElementById('booking-form');
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(bookingForm);
+      const payload = Object.fromEntries(formData.entries());
+      const status = bookingForm.querySelector('.form-status');
+
+      try {
+        await supabase.createBooking(payload);
+        status.textContent = '✅ Booking request submitted successfully.';
+        status.className = 'form-status success';
+        bookingForm.reset();
+        setTimeout(() => {
+          document.getElementById('booking-modal')?.classList.remove('is-open');
+          status.textContent = '';
+          status.className = 'form-status';
+        }, 2200);
+      } catch (error) {
+        status.textContent = '❌ Booking failed. Please try again.';
+        status.className = 'form-status error';
+      }
+    });
+  }
+
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const payload = Object.fromEntries(new FormData(loginForm).entries());
+      try {
+        const result = await supabase.signIn(payload.email, payload.password);
+        if (result.access_token) {
+          localStorage.setItem('fundi-connect-token', result.access_token);
+          alert('✅ Login successful.');
+          loginForm.reset();
+        }
+      } catch (error) {
+        alert('❌ Login failed. Please check your details.');
+      }
+    });
+  }
+
+  const registerForm = document.getElementById('register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const payload = Object.fromEntries(new FormData(registerForm).entries());
+      try {
+        const result = await supabase.signUp(payload.email, payload.password, {
+          name: payload.name,
+          role: payload.role || 'customer'
+        });
+        if (result.user) {
+          alert('✅ Registration successful. Please confirm your email if required.');
+          registerForm.reset();
+        }
+      } catch (error) {
+        alert('❌ Registration failed. Please try again.');
+      }
+    });
+  }
+}
+
+function openBookingModal(profName, trade) {
+  const modal = document.getElementById('booking-modal');
+  const serviceField = document.querySelector('#booking-form input[name="service"]');
+  if (serviceField) serviceField.value = `${trade} - ${profName}`;
+  if (modal) modal.classList.add('is-open');
+}
