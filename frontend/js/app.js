@@ -1,870 +1,329 @@
-* {
-  box-sizing: border-box;
-}
-
-:root {
-  --navy-900: #081b2e;
-  --navy-800: #0d233e;
-  --navy-700: #102d4d;
-  --navy-600: #1d3d5d;
-  --orange-500: #ff8a1d;
-  --orange-600: #f36d00;
-  --orange-100: #fff2e7;
-  --white: #ffffff;
-  --gray-50: #f5f7fb;
-  --gray-100: #edf1f6;
-  --gray-200: #dfe5ee;
-  --gray-300: #c8ced8;
-  --gray-500: #71819a;
-  --gray-700: #31445f;
-  --dark: #091321;
-  --shadow-soft: 0 20px 45px rgba(8, 27, 46, 0.08);
-  --shadow-card: 0 14px 32px rgba(15, 37, 60, 0.12);
-  --radius: 22px;
-  --max-width: 1180px;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: var(--gray-50);
-  color: var(--dark);
-  line-height: 1.6;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-.container {
-  width: min(var(--max-width), calc(100% - 32px));
-  margin: 0 auto;
-}
-
-.section {
-  padding: 96px 0;
-}
-
-.alt-bg {
-  background: rgba(255, 255, 255, 0.78);
-}
-
-.center {
-  text-align: center;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--orange-600);
-  margin-bottom: 16px;
-}
-
-.eyebrow.accent {
-  color: var(--orange-600);
-}
-
-h1, h2, h3, h4, p {
-  margin-top: 0;
-}
-
-h1 {
-  font-size: clamp(2.8rem, 5vw, 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.05em;
-  font-weight: 800;
-  margin-bottom: 18px;
-}
-
-h2 {
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: 1.15;
-  letter-spacing: -0.04em;
-  margin-bottom: 18px;
-}
-
-h3 {
-  font-size: 1.4rem;
-  letter-spacing: -0.02em;
-  margin-bottom: 10px;
-}
-
-p {
-  color: var(--gray-700);
-}
-
-.btn {
-  border: none;
-  border-radius: 999px;
-  padding: 0.92rem 1.5rem;
-  font-weight: 700;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--orange-500), var(--orange-600));
-  color: var(--white);
-  box-shadow: 0 12px 24px rgba(243, 109, 0, 0.25);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  color: var(--white);
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(14px);
-  background: rgba(8, 27, 46, 0.72);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 82px;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--white);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-
-.brand-mark {
-  width: 38px;
-  height: 38px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--orange-500), var(--orange-600));
-  color: var(--white);
-  font-size: 1.1rem;
-  box-shadow: 0 12px 24px rgba(243, 109, 0, 0.28);
-}
-
-.nav-panel {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 24px;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-links a {
-  color: rgba(255, 255, 255, 0.82);
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.nav-links a:hover {
-  color: var(--white);
-}
-
-.nav-toggle {
-  display: none;
-  width: 46px;
-  height: 46px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  padding: 10px 12px;
-}
-
-.nav-toggle span {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: var(--white);
-  margin: 5px 0;
-}
-
-.hero {
-  position: relative;
-  min-height: 760px;
-  display: flex;
-  align-items: center;
-  background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=80');
-  background-size: cover;
-  background-position: center;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(8, 27, 46, 0.85), rgba(8, 27, 46, 0.52));
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  width: min(var(--max-width), calc(100% - 32px));
-  padding: 80px 0 60px;
-}
-
-.hero-copy {
-  max-width: 700px;
-  color: var(--white);
-}
-
-.hero-copy p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
-  max-width: 620px;
-  margin-bottom: 30px;
-}
-
-.hero-search {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 20px;
-  padding: 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 22px;
-  max-width: 760px;
-  backdrop-filter: blur(10px);
-}
-
-.field {
-  display: flex;
-  align-items: center;
-}
-
-.hero-search input {
-  width: 100%;
-  border: none;
-  background: rgba(255, 255, 255, 0.96);
-  min-height: 56px;
-  border-radius: 16px;
-  padding: 0 18px;
-  color: var(--dark);
-}
-
-.hero-search .btn {
-  min-height: 56px;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 20px;
-}
-
-.trust-indicators {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-  margin: 32px 0 0;
-  gap: 24px;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.trust-indicators li {
-  position: relative;
-  padding-left: 18px;
-}
-
-.trust-indicators li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: var(--orange-500);
-  font-size: 1.5rem;
-  line-height: 1;
-}
-
-.section-heading {
-  margin-bottom: 40px;
-}
-
-.services-grid,
-.business-cards,
-.steps-grid,
-.account-grid,
-.footer-grid {
-  display: grid;
-  gap: 24px;
-}
-
-.services-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.service-card,
-.card {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-}
-
-.service-card {
-  overflow: hidden;
-  border: 1px solid rgba(18, 35, 56, 0.04);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.service-card:hover,
-.step-card:hover,
-.info-card:hover,
-.professional-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-card);
-}
-
-.service-media {
-  position: relative;
-  height: 220px;
-  background-size: cover;
-  background-position: center;
-}
-
-.service-caption {
-  padding: 22px 20px 24px;
-}
-
-.service-caption p {
-  min-height: 58px;
-}
-
-.service-card .explore-link {
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  color: var(--navy-800);
-}
-
-.service-card .explore-link::after {
-  content: '→';
-  color: var(--orange-600);
-}
-
-.directory-toolbar {
-  padding: 18px;
-  margin-bottom: 28px;
-}
-
-.filter-row {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.search-wrap input,
-.filter-row select,
-.auth-form input,
-.auth-form select,
-.booking-form input,
-.booking-form textarea {
-  width: 100%;
-  border: 1px solid var(--gray-200);
-  background: var(--gray-50);
-  border-radius: 14px;
-  min-height: 52px;
-  padding: 0 16px;
-  color: var(--dark);
-}
-
-.directory-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.professional-card {
-  overflow: hidden;
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(18, 35, 56, 0.03);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.professional-cover {
-  height: 150px;
-  background-size: cover;
-  background-position: center;
-}
-
-.professional-body {
-  padding: 18px 18px 20px;
-}
-
-.professional-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.professional-avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 20px rgba(9, 19, 33, 0.16);
-}
-
-.professional-meta {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  color: var(--gray-700);
-  font-size: 0.88rem;
-  margin-bottom: 12px;
-}
-
-.professional-meta span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.badge.verified {
-  background: rgba(28, 177, 118, 0.12);
-  color: #1a8d63;
-}
-
-.badge.unverified {
-  background: rgba(255, 138, 29, 0.15);
-  color: var(--orange-600);
-}
-
-.skill-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 14px 0 16px;
-}
-
-.skill-list span {
-  display: inline-flex;
-  background: var(--gray-100);
-  border-radius: 999px;
-  padding: 7px 10px;
-  font-size: 0.75rem;
-  color: var(--gray-700);
-}
-
-.professional-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.professional-actions .btn {
-  flex: 1;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-}
-
-.btn-ghost {
-  background: var(--gray-100);
-  color: var(--navy-800);
-}
-
-.steps-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.step-card {
-  padding: 28px 20px;
-  border: 1px solid rgba(18, 35, 56, 0.04);
-  background: var(--white);
-  border-radius: var(--radius);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.step-icon {
-  width: 56px;
-  height: 56px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  background: var(--orange-100);
-  color: var(--orange-600);
-  font-weight: 800;
-  margin-bottom: 20px;
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 42px;
-  align-items: center;
-}
-
-.about-image {
-  min-height: 520px;
-  background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80');
-  background-size: cover;
-  background-position: center;
-  border-radius: 30px;
-  box-shadow: var(--shadow-card);
-}
-
-.check-list {
-  list-style: none;
-  padding: 0;
-  margin: 26px 0 0;
-  display: grid;
-  gap: 14px;
-  color: var(--navy-800);
-  font-weight: 600;
-}
-
-.check-list li::before {
-  content: '✓';
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(29, 161, 120, 0.12);
-  color: #1e9a6a;
-  margin-right: 10px;
-}
-
-.business-cards {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.info-card {
-  position: relative;
-  padding: 24px 20px;
-  border: 1px solid rgba(18, 35, 56, 0.04);
-}
-
-.info-card.marked {
-  background: linear-gradient(180deg, var(--navy-800), var(--navy-700));
-  color: var(--white);
-}
-
-.info-card.marked p,
-.info-card.marked h3 {
-  color: var(--white);
-}
-
-.sponsored-tag {
-  display: inline-flex;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(255, 138, 29, 0.18);
-  color: var(--orange-100);
-  font-size: 0.72rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-
-.account-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.auth-card {
-  padding: 26px 22px;
-}
-
-.auth-form {
-  display: grid;
-  gap: 12px;
-}
-
-.auth-form button,
-.booking-form button {
-  margin-top: 10px;
-}
-
-.dashboard-card {
-  padding: 24px;
-}
-
-.demo-credentials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin: 18px 0 22px;
-  padding: 18px;
-  border-radius: 16px;
-  background: rgba(243, 109, 0, 0.06);
-  color: var(--navy-800);
-  font-weight: 600;
-}
-
-.admin-content {
-  margin-top: 24px;
-  display: grid;
-  gap: 16px;
-}
-
-.admin-stat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.admin-stat {
-  padding: 18px;
-  border-radius: 18px;
-  background: var(--gray-100);
-}
-
-.admin-stat strong {
-  display: block;
-  font-size: 1.8rem;
-  color: var(--navy-800);
-}
-
-.site-footer {
-  padding: 48px 0 26px;
-  background: var(--navy-900);
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.footer-grid {
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-}
-
-.site-footer h3,
-.site-footer h4 {
-  color: var(--white);
-}
-
-.site-footer ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 10px;
-}
-
-.site-footer a {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  margin-top: 30px;
-  padding-top: 20px;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 200;
-}
-
-.modal.is-open {
-  display: block;
-}
-
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(8, 27, 46, 0.64);
-}
-
-.modal-content {
-  position: relative;
-  width: min(720px, calc(100% - 32px));
-  margin: 5vh auto;
-  padding: 28px 24px 22px;
-  z-index: 1;
-}
-
-.modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  border: none;
-  background: var(--gray-100);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  color: var(--navy-800);
-}
-
-.booking-form {
-  display: grid;
-  gap: 14px;
-}
-
-.input-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.form-status {
-  min-height: 24px;
-  margin: 0;
-  font-weight: 600;
-}
-
-.form-status.success {
-  color: #197d5b;
-}
-
-.form-status.error {
-  color: #b8452b;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-@media (max-width: 1024px) {
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .directory-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .business-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .filter-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+// FundiConnect Kenya - Main Application
+
+// Global State
+const appState = {
+  currentUser: null,
+  professionals: [],
+  categories: [],
+  filteredProfessionals: [],
+  bookings: [],
+  isLoggedIn: false
+};
+
+// Initialize App
+document.addEventListener('DOMContentLoaded', () => {
+  initializeApp();
+});
+
+async function initializeApp() {
+  console.log('🚀 FundiConnect Kenya initializing...');
+  
+  // Load categories and professionals
+  await loadCategories();
+  await loadProfessionals();
+  
+  // Setup event listeners
+  setupEventListeners();
+  setupNavigation();
+  setupForms();
+  setupFilters();
+  
+  console.log('✅ FundiConnect Kenya ready');
+}
+
+// ===== LOAD DATA =====
+async function loadCategories() {
+  try {
+    const categories = await supabase.getCategories();
+    appState.categories = categories;
+    renderCategories(categories);
+    populateCategoryFilter(categories);
+  } catch (error) {
+    console.error('Failed to load categories:', error);
+    // Use fallback demo categories
+    loadDemoCategories();
   }
 }
 
-@media (max-width: 760px) {
-  .nav-toggle {
-    display: inline-block;
+async function loadProfessionals() {
+  try {
+    const professionals = await supabase.getProfessionals();
+    appState.professionals = professionals;
+    appState.filteredProfessionals = professionals;
+    renderProfessionals(professionals);
+  } catch (error) {
+    console.error('Failed to load professionals:', error);
+    // Use fallback demo professionals
+    loadDemoProfessionals();
+  }
+}
+
+function loadDemoCategories() {
+  const demoCategories = [
+    { id: 1, name: 'Carpentry', description: 'Custom joinery, cabinetry, framing, and finishes.', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80' },
+    { id: 2, name: 'Plumbing', description: 'Pipe repairs, installations, and leak fixes.', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80' },
+    { id: 3, name: 'Electrical Services', description: 'Wiring, repair, maintenance, and safety checks.', image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=900&q=80' },
+    { id: 4, name: 'Painting', description: 'Interior and exterior painting with neat finishes.', image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=900&q=80' },
+    { id: 5, name: 'Welding', description: 'Steelwork, fabrication, and structural repairs.', image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80' },
+    { id: 6, name: 'Cleaning', description: 'Home, office, and deep cleaning services.', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80' },
+    { id: 7, name: 'Mechanics', description: 'Vehicle maintenance, diagnostics, and body repairs.', image: 'https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=80' },
+    { id: 8, name: 'Computer and Phone Repair', description: 'Device diagnostics, repairs, and upgrades.', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80' },
+  ];
+  appState.categories = demoCategories;
+  renderCategories(demoCategories);
+  populateCategoryFilter(demoCategories);
+}
+
+function loadDemoProfessionals() {
+  const demoProfessionals = [
+    { id: 1, name: 'Amina Wanjiku', trade: 'Carpenter', location: 'Nairobi West', bio: 'Custom furniture maker with 8+ years experience.', profile_image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,800 - 5,000', rating: 4.9, reviews_count: 42, experience: 8, verified: true, available: true, category_id: 1, skills: ['Cabinet installation', 'Custom shelving', 'Wardrobes'] },
+    { id: 2, name: 'Daniel Otieno', trade: 'Electrician', location: 'Kisumu', bio: 'Licensed electrician with safe and efficient work.', profile_image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 2,000 - 6,500', rating: 4.8, reviews_count: 31, experience: 6, verified: true, available: true, category_id: 3, skills: ['Wiring', 'Lighting design', 'Fault finding'] },
+    { id: 3, name: 'Jane Njeri', trade: 'Plumber', location: 'Nakuru', bio: 'Reliable plumbing expert with leak detection expertise.', profile_image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,500 - 4,800', rating: 4.7, reviews_count: 25, experience: 5, verified: true, available: true, category_id: 2, skills: ['Pipe fitting', 'Bathroom installations', 'Leak repair'] },
+    { id: 4, name: 'Joseph Kariuki', trade: 'Painter', location: 'Thika', bio: 'Interior and exterior painter with smooth finishes.', profile_image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,200 - 5,200', rating: 4.6, reviews_count: 22, experience: 7, verified: false, available: true, category_id: 4, skills: ['Wall priming', 'Decorative finishes', 'Exterior painting'] },
+    { id: 5, name: 'Peter Kamau', trade: 'Welder', location: 'Mombasa', bio: 'Fabrication and repair specialist for metal structures.', profile_image: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 2,500 - 7,500', rating: 4.9, reviews_count: 18, experience: 9, verified: true, available: false, category_id: 5, skills: ['Metal fabrication', 'Gate repairs', 'Steel welding'] },
+    { id: 6, name: 'Grace Mburu', trade: 'Cleaner', location: 'Westlands', bio: 'Home and office cleaning professional.', profile_image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,000 - 3,200', rating: 4.8, reviews_count: 29, experience: 4, verified: true, available: true, category_id: 6, skills: ['Deep cleaning', 'Move-in cleaning', 'Office tidying'] },
+    { id: 7, name: 'Kevin Omondi', trade: 'Mechanic', location: 'Nairobi CBD', bio: 'Vehicle diagnostics and maintenance specialist.', profile_image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 2,200 - 6,800', rating: 4.7, reviews_count: 36, experience: 10, verified: true, available: true, category_id: 7, skills: ['Engine tuning', 'Brake service', 'Diagnostics'] },
+    { id: 8, name: 'Salim Ali', trade: 'Phone & Computer Repair', location: 'Eldoret', bio: 'Tech repair specialist for devices and troubleshooting.', profile_image: 'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80', cover_image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80', price_range: 'KSh 1,800 - 5,000', rating: 4.9, reviews_count: 40, experience: 6, verified: true, available: true, category_id: 8, skills: ['Smartphone repair', 'Laptop diagnostics', 'Software setup'] },
+  ];
+  appState.professionals = demoProfessionals;
+  appState.filteredProfessionals = demoProfessionals;
+  renderProfessionals(demoProfessionals);
+}
+
+// ===== RENDER FUNCTIONS =====
+function renderCategories(categories) {
+  const grid = document.getElementById('services-grid');
+  if (!grid) return;
+  
+  grid.innerHTML = categories.map(cat => `
+    <div class="service-card">
+      <div class="service-media" style="background-image: url('${cat.image}')"></div>
+      <div class="service-caption">
+        <h3>${cat.name}</h3>
+        <p>${cat.description || ''}</p>
+        <a href="#find-fundi" class="explore-link">Explore Fundis</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProfessionals(professionals) {
+  const grid = document.getElementById('professionals-grid');
+  if (!grid) return;
+  
+  if (professionals.length === 0) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">No professionals found matching your criteria.</p>';
+    return;
+  }
+  
+  grid.innerHTML = professionals.map(prof => `
+    <div class="professional-card">
+      <div class="professional-cover" style="background-image: url('${prof.cover_image}')"></div>
+      <div class="professional-body">
+        <div class="professional-head">
+          <img src="${prof.profile_image}" alt="${prof.name}" class="professional-avatar">
+          <div>
+            <h3 style="margin: 0;">${prof.name}</h3>
+            <p style="margin: 0; color: #666; font-size: 0.9rem;">${prof.trade}</p>
+          </div>
+        </div>
+        <div class="professional-meta">
+          <span>📍 ${prof.location}</span>
+          ${prof.verified ? '<span class="badge verified">✓ Verified</span>' : '<span class="badge unverified">Pending</span>'}
+        </div>
+        <div class="professional-meta">
+          <span>⭐ ${prof.rating || 4.5} (${prof.reviews_count || 0} reviews)</span>
+          <span>📅 ${prof.experience || 0} years</span>
+        </div>
+        <p>${prof.bio || ''}</p>
+        <div class="skill-list">
+          ${(prof.skills || []).map(skill => `<span>${skill}</span>`).join('')}
+        </div>
+        <p><strong>${prof.price_range || 'Quote on request'}</strong></p>
+        <div class="professional-actions">
+          <button class="btn btn-primary" onclick="openBookingModal('${prof.name}', '${prof.trade}')">Book Now</button>
+          <button class="btn btn-ghost">Save</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function populateCategoryFilter(categories) {
+  const select = document.getElementById('filter-category');
+  if (!select) return;
+  
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat.name;
+    option.textContent = cat.name;
+    select.appendChild(option);
+  });
+}
+
+// ===== SETUP EVENT LISTENERS =====
+function setupEventListeners() {
+  // Navigation toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const navPanel = document.querySelector('.nav-panel');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      navPanel.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', navPanel.classList.contains('is-open'));
+    });
   }
 
-  .nav-panel {
-    position: absolute;
-    top: 82px;
-    right: 16px;
-    left: 16px;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 22px 18px;
-    background: rgba(8, 27, 46, 0.96);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    box-shadow: 0 18px 36px rgba(8, 27, 46, 0.28);
+  // Modal close
+  const modal = document.getElementById('booking-modal');
+  const backdrop = document.querySelector('.modal-backdrop');
+  const closeBtn = document.querySelector('.modal-close');
+  if (backdrop) backdrop.addEventListener('click', () => modal.classList.remove('is-open'));
+  if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('is-open'));
+}
+
+function setupNavigation() {
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelector('.nav-panel').classList.remove('is-open');
+    });
+  });
+}
+
+function setupForms() {
+  // Booking form
+  const bookingForm = document.getElementById('booking-form');
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await handleBookingSubmit(e.target);
+    });
   }
 
-  .nav-panel.is-open {
-    display: flex;
+  // Login form
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await handleLogin(e.target);
+    });
   }
 
-  .nav-links {
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 14px;
+  // Register form
+  const registerForm = document.getElementById('register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await handleRegister(e.target);
+    });
   }
+}
 
-  .hero {
-    min-height: 650px;
-  }
+function setupFilters() {
+  const searchInput = document.getElementById('directory-search');
+  const categoryFilter = document.getElementById('filter-category');
+  const locationFilter = document.getElementById('filter-location');
+  const priceFilter = document.getElementById('filter-price');
+  const experienceFilter = document.getElementById('filter-experience');
 
-  .hero-search {
-    grid-template-columns: 1fr;
-  }
+  const applyFilters = () => {
+    let filtered = appState.professionals;
 
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    if (searchInput?.value) {
+      const search = searchInput.value.toLowerCase();
+      filtered = filtered.filter(p => 
+        p.name.toLowerCase().includes(search) ||
+        p.trade.toLowerCase().includes(search) ||
+        p.location.toLowerCase().includes(search)
+      );
+    }
 
-  .services-grid,
-  .directory-grid,
-  .steps-grid,
-  .account-grid,
-  .business-cards,
-  .footer-grid,
-  .about-grid,
-  .admin-stat-grid {
-    grid-template-columns: 1fr;
-  }
+    if (categoryFilter?.value) {
+      filtered = filtered.filter(p => p.trade === categoryFilter.value);
+    }
 
-  .filter-row,
-  .input-row {
-    grid-template-columns: 1fr;
-  }
+    if (locationFilter?.value) {
+      filtered = filtered.filter(p => p.location.toLowerCase().includes(locationFilter.value.toLowerCase()));
+    }
 
-  .section {
-    padding: 72px 0;
+    if (experienceFilter?.value) {
+      const minExp = parseInt(experienceFilter.value.split('+')[0]);
+      filtered = filtered.filter(p => (p.experience || 0) >= minExp);
+    }
+
+    appState.filteredProfessionals = filtered;
+    renderProfessionals(filtered);
+  };
+
+  searchInput?.addEventListener('input', applyFilters);
+  categoryFilter?.addEventListener('change', applyFilters);
+  locationFilter?.addEventListener('change', applyFilters);
+  priceFilter?.addEventListener('change', applyFilters);
+  experienceFilter?.addEventListener('change', applyFilters);
+}
+
+// ===== FORM HANDLERS =====
+async function handleBookingSubmit(form) {
+  const formData = new FormData(form);
+  const bookingData = Object.fromEntries(formData);
+  const statusEl = form.querySelector('.form-status');
+
+  try {
+    await supabase.createBooking(bookingData);
+    statusEl.textContent = '✅ Booking request submitted successfully!';
+    statusEl.classList.add('success');
+    form.reset();
+    setTimeout(() => {
+      document.getElementById('booking-modal').classList.remove('is-open');
+      statusEl.textContent = '';
+    }, 2000);
+  } catch (error) {
+    statusEl.textContent = '❌ Booking failed. Please try again.';
+    statusEl.classList.add('error');
   }
+}
+
+async function handleLogin(form) {
+  const formData = new FormData(form);
+  const { email, password } = Object.fromEntries(formData);
+
+  try {
+    const response = await supabase.signIn(email, password);
+    if (response.access_token) {
+      localStorage.setItem('fundiToken', response.access_token);
+      appState.isLoggedIn = true;
+      appState.currentUser = { email };
+      alert('✅ Login successful!');
+      form.reset();
+    } else {
+      alert('❌ Login failed. Check your credentials.');
+    }
+  } catch (error) {
+    alert('❌ Login error: ' + error.message);
+  }
+}
+
+async function handleRegister(form) {
+  const formData = new FormData(form);
+  const { name, email, password, role } = Object.fromEntries(formData);
+
+  try {
+    const response = await supabase.signUp(email, password, { name, role });
+    if (response.id || response.access_token) {
+      alert('✅ Account created! Please check your email to confirm.');
+      form.reset();
+    } else {
+      alert('❌ Registration failed.');
+    }
+  } catch (error) {
+    alert('❌ Registration error: ' + error.message);
+  }
+}
+
+// ===== UTILITIES =====
+function openBookingModal(professionalName, trade) {
+  const modal = document.getElementById('booking-modal');
+  const form = document.getElementById('booking-form');
+  const serviceInput = form.querySelector('input[name="service"]');
+  serviceInput.value = `${trade} - ${professionalName}`;
+  modal.classList.add('is-open');
 }
